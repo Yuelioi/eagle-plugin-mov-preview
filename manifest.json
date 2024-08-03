@@ -1,0 +1,17 @@
+{
+  "id": "cbdf2b73-9274-4747-b475-d9a7be33732e",
+  "version": "1.0.0",
+  "platform": "all",
+  "arch": "all",
+  "name": "Mov Preview",
+  "logo": "/logo.png",
+  "keywords": ["mov", "video"],
+  "devTools": false,
+  "preview": {
+    "mov": {
+      "viewer": {
+        "path": "index.html"
+      }
+    }
+  }
+}

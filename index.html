@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Video Viewer</title>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .image-container {
+        position: relative;
+        overflow: hidden;
+        width: 75%;
+        transform: perspective(75em) rotateX(18deg);
+        box-shadow: rgba(213, 220, 226, 0.32) 0px 60px 123px -25px, rgba(184, 194, 204, 0.32) 0px 35px 75px -35px;
+      }
+
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        transition: transform 1s ease;
+      }
+
+      .image-container::before,
+      .image-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background-color: rgba(180, 185, 190, 0.1);
+        transition: transform 1s ease;
+        z-index: 1;
+      }
+
+      .image-container::before {
+        left: 0;
+        transform: translateX(0);
+      }
+
+      .image-container::after {
+        right: 0;
+        transform: translateX(0);
+      }
+
+      .image-container:hover::before {
+        transform: translateX(-100%);
+      }
+
+      .image-container:hover::after {
+        transform: translateX(100%);
+      }
+
+      .image-container:hover img {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="viewer"
+      class="image-container">
+      <div id="title">已在播放器打开,这里看不了喔</div>
+
+      <img />
+    </div>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const filePath = urlParams.get("path");
+
+      const viewer = document.querySelector("#viewer img");
+
+      // 1. Load the thumbnail image first
+      // 👍 Avoid loading for too long, and UI has no content
+      viewer.src = filePath.replace(".mov", "_thumbnail.png");
+
+      // 2. Load the file and replace thumbnail
+      (async function () {
+        const openFileWithDefaultPlayer = require("./main.js");
+        openFileWithDefaultPlayer(filePath);
+      })();
+    </script>
+  </body>
+</html>
